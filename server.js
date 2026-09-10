@@ -93,7 +93,7 @@ const submissionLimiter = rateLimit({
 });
 
 function normalizeAnonymousId(value) {
-  return String(value || '').normalize('NFKC').trim().replace(/\\s+/g, '');
+  return String(value || '').normalize('NFKC').trim().replace(/\s+/g, '');
 }
 function normalizeTeacherId(value) {
   return String(value || '').normalize('NFKC').trim().toLowerCase();
@@ -105,7 +105,7 @@ function canonicalAnonymousId(value) {
   return allowedIdHashes.has(digest) ? normalized : null;
 }
 function cleanText(value, max=5000) { return String(value ?? '').trim().slice(0, max); }
-function isFourDigitPin(pin) { return /^\\d{4}$/.test(String(pin || '')); }
+function isFourDigitPin(pin) { return /^\d{4}$/.test(String(pin || '')); }
 function round3(n) { return Number(Number(n).toFixed(3)); }
 function parseTriple(value) {
   if (!Array.isArray(value) || value.length !== 3) return null;
@@ -305,7 +305,7 @@ app.get('/api/teacher/export.csv',requireTeacher,async(req,res,next)=>{
     const head=['익명ID','최종제출시각','기본형평균(m)','개선형평균(m)','향상거리(m)','힘개념(4)','설계근거(4)','실험수행(4)','결과해석(4)','총점','교사피드백'];
     const lines=[head.map(csvEscape).join(',')];
     for(const x of r.rows) lines.push([x.anonymous_id,x.submitted_at?.toISOString?.()||x.submitted_at,x.baseline_avg,x.improved_avg,x.delta_m,x.concept_level,x.design_level,x.experiment_level,x.analysis_level,x.score,x.feedback].map(csvEscape).join(','));
-    res.setHeader('Content-Type','text/csv; charset=utf-8');res.setHeader('Content-Disposition','attachment; filename="flying-cup-anonymous-assessment.csv"');res.send('\\uFEFF'+lines.join('\\n'));
+    res.setHeader('Content-Type','text/csv; charset=utf-8');res.setHeader('Content-Disposition','attachment; filename="flying-cup-anonymous-assessment.csv"');res.send('\uFEFF'+lines.join('\n'));
   }catch(e){next(e);}
 });
 
