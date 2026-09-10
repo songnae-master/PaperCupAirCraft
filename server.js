@@ -309,7 +309,15 @@ app.get('/api/teacher/export.csv',requireTeacher,async(req,res,next)=>{
   }catch(e){next(e);}
 });
 
-app.use(express.static(path.join(__dirname,'public'),{etag:true,maxAge:IS_PROD?'1h':0}));
+app.use(express.static(path.join(__dirname,'public'), {
+  etag: true,
+  maxAge: 0,
+  setHeaders: (res, filePath) => {
+    if (/\.(?:html|js|css)$/i.test(filePath)) {
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    }
+  }
+}));
 app.use((req,res,next)=>{if(req.path.startsWith('/api/'))return res.status(404).json({error:'not_found'});if(!['GET','HEAD'].includes(req.method))return next();res.sendFile(path.join(__dirname,'public','index.html'));});
 app.use((err,req,res,next)=>{console.error(err);if(res.headersSent)return next(err);res.status(500).json({error:'server_error',message:'서버 오류가 발생했습니다.'});});
 
