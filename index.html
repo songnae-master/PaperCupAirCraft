@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3-Force Flying Cup Challenge | 중1 힘과 운동 수행평가</title>
+<style>
+:root{
+  --ink:#18202a; --muted:#667085; --line:#d8dee8; --paper:#fff;
+  --bg:#f4f7fb; --accent:#2f5bea; --accent2:#0d8f72; --warn:#b45309;
+  --soft:#eef3ff; --soft2:#eaf8f4; --soft3:#fff7e8;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; font-family:"Pretendard","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  color:var(--ink); background:var(--bg); line-height:1.55;
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.appbar{
+  position:sticky; top:0; z-index:50; background:rgba(255,255,255,.94);
+  backdrop-filter: blur(10px); border-bottom:1px solid var(--line);
+}
+.appbar .row{
+  max-width:1180px; margin:auto; padding:10px 18px; display:flex; gap:10px; align-items:center;
+}
+.brand{font-weight:900; letter-spacing:-.4px; margin-right:auto}
+.brand small{display:block; color:var(--muted); font-size:11px; font-weight:600}
+.btn{
+  border:1px solid var(--line); border-radius:10px; background:#fff; padding:8px 12px; font-weight:750;
+}
+.btn.primary{background:var(--accent); color:white; border-color:var(--accent)}
+.btn.green{background:var(--accent2); color:white; border-color:var(--accent2)}
+.btn.ghost{background:transparent}
+main{max-width:1180px; margin:22px auto 80px; padding:0 18px}
+.hero{
+  display:grid; grid-template-columns:1.25fr .75fr; gap:18px; align-items:stretch; margin-bottom:18px;
+}
+.card{
+  background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:20px;
+  box-shadow:0 6px 24px rgba(26,39,66,.06);
+}
+.hero h1{font-size:34px; line-height:1.15; margin:5px 0 12px; letter-spacing:-1px}
+.kicker{display:inline-flex; gap:6px; flex-wrap:wrap}
+.pill{display:inline-block; padding:4px 9px; border-radius:999px; font-size:12px; font-weight:800; background:var(--soft); color:#29449a}
+.hero p{color:#465165; margin:8px 0}
+.mission{background:linear-gradient(135deg,#f3f6ff,#eefbf7); border:1px solid #cad7ff}
+.mission strong{font-size:20px}
+.mission .big{font-size:24px; font-weight:900; margin:8px 0}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+.grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+section{scroll-margin-top:80px; margin:18px 0}
+h2{font-size:24px; margin:0 0 12px; letter-spacing:-.5px}
+h3{font-size:17px; margin:0 0 8px}
+.subtle{color:var(--muted)}
+.timeline{display:grid; grid-template-columns:repeat(6,1fr); gap:8px}
+.step{border:1px solid var(--line); border-radius:12px; padding:10px; background:white; min-height:88px}
+.step b{display:block; color:var(--accent); font-size:12px; margin-bottom:4px}
+.force-card{border-top:5px solid var(--accent)}
+.force-card.f2{border-top-color:var(--accent2)}
+.force-card.f3{border-top-color:#8a5cf6}
+.force-icon{font-size:28px}
+.notice{border-left:5px solid var(--warn); background:var(--soft3); padding:12px 14px; border-radius:10px}
+.good{border-left-color:var(--accent2); background:var(--soft2)}
+table{width:100%; border-collapse:collapse; background:white}
+th,td{border:1px solid var(--line); padding:8px; vertical-align:middle}
+th{background:#f6f8fb; text-align:center}
+td input{width:100%; border:0; outline:none; background:transparent; padding:4px}
+.field, textarea{
+  width:100%; border:1px solid #cfd6e1; border-radius:10px; padding:10px; background:#fff;
+}
+textarea{min-height:96px; resize:vertical}
+label{font-weight:760}
+.formrow{display:grid; grid-template-columns:repeat(4,1fr); gap:10px}
+.toolbar{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:10px 0}
+.timer{
+  font-variant-numeric:tabular-nums; font-size:26px; font-weight:900; letter-spacing:.5px;
+  padding:7px 12px; border:1px solid var(--line); border-radius:12px; background:#fff;
+}
+.diagram{width:100%; min-height:270px; border-radius:14px; background:#f8fafc; border:1px solid var(--line); padding:10px}
+.hint{
+  border:1px dashed #9ba9bf; border-radius:12px; padding:12px; background:#fbfcfe;
+}
+.hint details summary{font-weight:800; cursor:pointer}
+.question{padding:14px; border:1px solid var(--line); border-radius:14px; margin:10px 0; background:#fff}
+.qnum{display:inline-grid; place-items:center; width:28px; height:28px; border-radius:50%; background:var(--ink); color:#fff; font-weight:900; margin-right:7px}
+.scoregrid{display:grid; grid-template-columns:1fr; gap:12px}
+.rubric-row{border:1px solid var(--line); border-radius:14px; padding:14px; background:white}
+.rubric-row .head{display:flex; align-items:center; gap:10px; margin-bottom:9px}
+.rubric-row .head strong{margin-right:auto}
+.weight{font-size:12px; background:#eef2f7; border-radius:999px; padding:4px 8px}
+.levels{display:grid; grid-template-columns:repeat(4,1fr); gap:8px}
+.levels label{
+  border:1px solid var(--line); border-radius:10px; padding:10px; font-weight:650; cursor:pointer; min-height:95px;
+}
+.levels input{margin-right:5px}
+.levels label:has(input:checked){outline:2px solid var(--accent); background:var(--soft)}
+.scorebox{
+  display:grid; grid-template-columns:1fr auto; gap:16px; align-items:center;
+  background:#111827; color:white; border-radius:16px; padding:18px;
+}
+#totalScore{font-size:42px; font-weight:950}
+.small{font-size:12px}
+.only-teacher{display:none}
+body.teacher .only-teacher{display:block}
+body.teacher .student-hidden-in-teacher{display:none}
+.teacher-toggle.active{background:#111827;color:#fff;border-color:#111827}
+.badge{font-size:11px; padding:3px 7px; border:1px solid var(--line); border-radius:999px; color:var(--muted)}
+.print-page{background:white}
+.checklist label{display:block; margin:6px 0; font-weight:600}
+footer{text-align:center; color:var(--muted); font-size:12px; padding:25px}
+hr{border:0;border-top:1px solid var(--line);margin:18px 0}
+@media(max-width:850px){
+  .hero,.grid2,.grid3,.formrow{grid-template-columns:1fr}
+  .timeline{grid-template-columns:repeat(2,1fr)}
+  .levels{grid-template-columns:1fr 1fr}
+  .appbar .row{flex-wrap:wrap}
+}
+@media print{
+  @page{size:A4; margin:12mm}
+  body{background:#fff; font-size:10.6pt}
+  .appbar,.screen-only,footer{display:none!important}
+  main{max-width:none; margin:0; padding:0}
+  .card{box-shadow:none; border-color:#aaa; break-inside:avoid; border-radius:8px}
+  section{margin:0}
+  .print-page{page-break-after:always; min-height:270mm; padding:0}
+  .print-page:last-child{page-break-after:auto}
+  .student-print,.teacher-print{display:none}
+  body.print-student .student-print{display:block}
+  body.print-teacher .teacher-print{display:block}
+  body.print-all .student-print, body.print-all .teacher-print{display:block}
+  body.print-all .teacher-print:first-of-type{page-break-before:always}
+  textarea,.field,input{border:1px solid #999!important}
+  textarea{min-height:70px}
+  .levels label{min-height:78px}
+  .hero{display:block}
+  .mission{margin-top:10px}
+}
+</style>
+</head>
+<body>
+<header class="appbar screen-only">
+  <div class="row">
+    <div class="brand">3-Force Flying Cup Challenge<small>중1 「여러 가지 힘」 45분 수행평가</small></div>
+    <button class="btn" onclick="scrollToId('guide')">제작 안내</button>
+    <button class="btn" onclick="scrollToId('worksheet')">학생 기록</button>
+    <button class="btn teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">교사 평가 모드</button>
+    <button class="btn primary" onclick="printMode('student')">학생용 A4 인쇄</button>
+    <button class="btn green only-teacher" onclick="printMode('teacher')">교사용 A4 인쇄</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero student-print print-page">
+    <div class="card">
+      <div class="kicker"><span class="pill">탄성력</span><span class="pill">마찰력</span><span class="pill">중력</span><span class="pill">설계·측정·개선</span></div>
+      <h1>종이컵 비행체<br>성능 개선 챌린지</h1>
+      <p>배운 힘의 개념을 이용해 기본형보다 더 멀리 날아가는 비행체를 설계하고, <b>왜 좋아졌는지 측정값과 힘의 개념으로 설명</b>하세요.</p>
+
+      <div class="formrow" style="margin-top:14px">
+        <div><label>학년·반</label><input id="className" class="field save" placeholder="예: 1-3"></div>
+        <div><label>번호</label><input id="studentNo" class="field save" placeholder="예: 17"></div>
+        <div><label>이름</label><input id="studentName" class="field save"></div>
+        <div><label>모둠</label><input id="teamName" class="field save"></div>
+      </div>
+
+      <h3 style="margin-top:18px">수행평가에서 중요한 것</h3>
+      <div class="grid3">
+        <div class="hint"><b>① 힘을 정확히 찾기</b><br><span class="small">어느 단계에서 어떤 힘이 작용하는지 구분</span></div>
+        <div class="hint"><b>② 설계를 근거 있게 바꾸기</b><br><span class="small">“왠지”가 아니라 배운 개념으로 예측</span></div>
+        <div class="hint"><b>③ 결과를 자료로 설명하기</b><br><span class="small">3회 측정과 평균으로 개선 효과 확인</span></div>
+      </div>
+    </div>
+    <div class="card mission">
+      <strong>오늘의 미션</strong>
+      <div class="big">기본형보다<br>더 멀리 날려라.</div>
+      <p><b>단, 성능 자체는 점수가 아닙니다.</b><br>설계 근거, 변인 통제, 자료 해석이 평가 대상입니다.</p>
+      <hr>
+      <b>권장 기준</b>
+      <p>출발선에서 <b>첫 착지점</b>까지의 수평거리 측정<br>각 설계별 <b>3회 반복</b> → 평균 비교</p>
+    </div>
+  </section>
+
+  <section id="guide" class="student-print print-page">
+    <div class="card">
+      <h2>1. 종이컵 비행체 기본형 제작</h2>
+      <div class="grid2">
+        <div>
+          <h3>준비물</h3>
+          <div class="checklist">
+            <label>□ 같은 크기의 종이컵 2개</label>
+            <label>□ 고무줄 2~3개</label>
+            <label>□ 마스킹테이프 약 40 cm</label>
+            <label>□ 줄자 또는 거리 표시 테이프</label>
+            <label>□ 선택 재료: 클립 2개</label>
+          </div>
+          <h3 style="margin-top:12px">기본 제작 순서</h3>
+          <ol>
+            <li>두 종이컵의 <b>바닥끼리 맞대어</b> 테이프로 단단히 연결합니다.</li>
+            <li>고무줄을 길게 연결하여 발사용 고무줄을 만듭니다.</li>
+            <li>고무줄을 두 컵의 연결 부분 주위에 2~4회 감습니다.</li>
+            <li>한 손으로 고무줄 끝을 잡고 다른 손으로 비행체를 잡습니다.</li>
+            <li>정해진 길이만큼 당긴 뒤 컵을 놓아 발사합니다.</li>
+          </ol>
+        </div>
+        <div>
+          <svg class="diagram" viewBox="0 0 520 270" aria-label="종이컵 비행체 구조 그림">
+            <rect x="0" y="0" width="520" height="270" rx="16" fill="#f8fafc"/>
+            <path d="M105 90 L205 120 L205 150 L105 180 Q80 135 105 90Z" fill="#ffffff" stroke="#334155" stroke-width="4"/>
+            <path d="M415 90 L315 120 L315 150 L415 180 Q440 135 415 90Z" fill="#ffffff" stroke="#334155" stroke-width="4"/>
+            <rect x="202" y="116" width="116" height="38" rx="8" fill="#dbe4ff" stroke="#2f5bea" stroke-width="3"/>
+            <path d="M210 105 C250 80 295 80 315 105" fill="none" stroke="#ef4444" stroke-width="7"/>
+            <path d="M210 165 C250 190 295 190 315 165" fill="none" stroke="#ef4444" stroke-width="7"/>
+            <path d="M315 136 C380 136 430 136 475 136" fill="none" stroke="#ef4444" stroke-width="7"/>
+            <text x="236" y="141" font-size="20" font-weight="700" fill="#243b7a">연결부</text>
+            <text x="360" y="118" font-size="18" font-weight="700" fill="#b91c1c">고무줄</text>
+            <path d="M140 52 Q260 6 380 52" fill="none" stroke="#0d8f72" stroke-width="4" marker-end="url(#arrow)"/>
+            <text x="203" y="35" font-size="18" font-weight="700" fill="#0d8f72">발사 시 회전</text>
+            <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#0d8f72"/></marker></defs>
+          </svg>
+          <div class="notice" style="margin-top:10px">
+            <b>안전</b> — 사람 방향으로 발사하지 않습니다. 발사 구역과 측정 구역을 분리하고, 고무줄은 얼굴 가까이에서 당기지 않습니다.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h2>2. 세 가지 힘, 어디에서 관여할까?</h2>
+      <div class="grid3">
+        <div class="force-card card">
+          <div class="force-icon">↔️</div>
+          <h3>탄성력</h3>
+          <p>늘어난 고무줄이 원래 길이로 돌아가려 하면서 발사 순간 비행체의 운동을 변화시킵니다.</p>
+          <details><summary>생각 힌트</summary><p class="small">고무줄을 얼마나 늘렸는가가 달라지면 출발 운동은 어떻게 달라질까요?</p></details>
+        </div>
+        <div class="force-card f2 card">
+          <div class="force-icon">🌀</div>
+          <h3>마찰력</h3>
+          <p>고무줄과 종이컵이 접촉하는 부분의 마찰 때문에 고무줄의 움직임이 컵의 <b>회전</b>으로 전달됩니다.</p>
+          <details><summary>생각 힌트</summary><p class="small">감는 횟수와 접촉 상태가 달라지면 회전이 똑같을까요?</p></details>
+        </div>
+        <div class="force-card f3 card">
+          <div class="force-icon">⬇️</div>
+          <h3>중력</h3>
+          <p>비행체는 비행하는 동안 지구가 아래쪽으로 잡아당기는 힘을 받습니다.</p>
+          <details><summary>생각 힌트</summary><p class="small">질량을 바꾸면 무게는 변합니다. 그러나 “가벼우면 무조건 오래 난다”라고 단정해도 될까요?</p></details>
+        </div>
+      </div>
+      <div class="notice good" style="margin-top:12px">
+        <b>과학적으로 중요한 구분</b> — 세 힘이 비행 내내 동시에 같은 방식으로 작용하는 것은 아닙니다. 특히 <b>탄성력과 고무줄-컵 사이의 마찰력은 주로 발사 과정</b>에 관여합니다. 고무줄이 떨어진 뒤 자유 비행에서는 중력과 공기의 힘이 중요해집니다.
+      </div>
+    </div>
+  </section>
+
+  <section class="student-print print-page">
+    <div class="card">
+      <h2>3. 45분 탐구 흐름</h2>
+      <div class="timeline">
+        <div class="step"><b>0–5분</b>현상 관찰<br>성능 예측</div>
+        <div class="step"><b>5–12분</b>기본형 제작</div>
+        <div class="step"><b>12–18분</b>기본형 3회 측정</div>
+        <div class="step"><b>18–25분</b>힘 분석<br>변인 선택</div>
+        <div class="step"><b>25–36분</b>개선형 제작·측정</div>
+        <div class="step"><b>36–45분</b>평균 비교<br>개별 설명</div>
+      </div>
+
+      <div class="toolbar screen-only">
+        <span class="timer" id="timer">45:00</span>
+        <button class="btn" onclick="startTimer()">시작</button>
+        <button class="btn" onclick="pauseTimer()">일시정지</button>
+        <button class="btn" onclick="resetTimer()">45분 초기화</button>
+      </div>
+
+      <h2 style="margin-top:18px">4. 우리 모둠이 바꿀 수 있는 것</h2>
+      <table>
+        <tr><th>설계 변수</th><th>가능한 변화 예</th><th>관련 힘</th><th>주의</th></tr>
+        <tr><td>고무줄 당긴 길이</td><td>40 / 60 / 80 cm</td><td>탄성력</td><td>발사 위치·방향은 같게</td></tr>
+        <tr><td>고무줄 감는 횟수</td><td>1 / 2 / 3 / 4회</td><td>마찰력·회전</td><td>당긴 길이는 같게</td></tr>
+        <tr><td>질량</td><td>클립 0 / 1 / 2개</td><td>중력(무게)</td><td>부착 위치도 기록</td></tr>
+      </table>
+
+      <div class="notice">
+        <b>수행평가 규칙</b> — 한 번에 <b>한 가지 조건만</b> 바꾸세요. 여러 조건을 동시에 바꾸면 어떤 변화 때문에 결과가 달라졌는지 알기 어렵습니다.
+      </div>
+
+      <h2 style="margin-top:18px">5. 설계 전 예측</h2>
+      <div class="question">
+        <span class="qnum">1</span><label>우리 모둠이 바꿀 한 가지 조건은 무엇인가?</label>
+        <input id="changedVar" class="field save" placeholder="예: 고무줄 감는 횟수">
+      </div>
+      <div class="question">
+        <span class="qnum">2</span><label>그 조건을 어떻게 바꿀 것인가?</label>
+        <input id="changeHow" class="field save" placeholder="예: 2회 → 4회">
+      </div>
+      <div class="question">
+        <span class="qnum">3</span><label>어떤 힘과 관련 있으며, 비행거리가 어떻게 달라질 것으로 예상하는가?</label>
+        <textarea id="prediction" class="save" placeholder="‘힘’이라는 용어를 사용하여 근거까지 적기"></textarea>
+      </div>
+    </div>
+  </section>
+
+  <section id="worksheet" class="student-print print-page">
+    <div class="card">
+      <h2>6. 기본형과 개선형 성능 측정</h2>
+      <table>
+        <tr><th style="width:19%">설계</th><th>1회 (m)</th><th>2회 (m)</th><th>3회 (m)</th><th>평균 (m)</th></tr>
+        <tr>
+          <td><b>기본형</b></td>
+          <td><input id="b1" class="num save" type="number" step="0.01" oninput="calcMeans()"></td>
+          <td><input id="b2" class="num save" type="number" step="0.01" oninput="calcMeans()"></td>
+          <td><input id="b3" class="num save" type="number" step="0.01" oninput="calcMeans()"></td>
+          <td id="bavg"><b>—</b></td>
+        </tr>
+        <tr>
+          <td><b>개선형</b></td>
+          <td><input id="a1" class="num save" type="number" step="0.01" oninput="calcMeans()"></td>
+          <td><input id="a2" class="num save" type="number" step="0.01" oninput="calcMeans()"></td>
+          <td><input id="a3" class="num save" type="number" step="0.01" oninput="calcMeans()"></td>
+          <td id="aavg"><b>—</b></td>
+        </tr>
+      </table>
+
+      <div class="grid2">
+        <div class="card" style="background:#f8fafc">
+          <h3>평균 비행거리 변화</h3>
+          <div style="font-size:30px;font-weight:900" id="delta">— m</div>
+          <span class="small">개선형 평균 − 기본형 평균</span>
+        </div>
+        <div class="card" style="background:#f8fafc">
+          <h3>우리의 결론</h3>
+          <select id="resultChoice" class="field save">
+            <option value="">선택</option>
+            <option>비행거리가 증가했다.</option>
+            <option>거의 변화가 없었다.</option>
+            <option>비행거리가 감소했다.</option>
+          </select>
+        </div>
+      </div>
+
+      <h2 style="margin-top:18px">7. 개별 결과 해석</h2>
+      <div class="question">
+        <span class="qnum">4</span><label>기본형과 개선형의 평균 비행거리를 이용해 결과를 한 문장으로 쓰시오.</label>
+        <textarea id="answer4" class="save"></textarea>
+      </div>
+      <div class="question">
+        <span class="qnum">5</span><label>우리 모둠의 설계 변화가 결과에 영향을 준 까닭을 관련된 힘의 개념으로 설명하시오.</label>
+        <textarea id="answer5" class="save"></textarea>
+      </div>
+      <div class="question">
+        <span class="qnum">6</span><label>이 실험에서 같게 해야 했던 조건을 두 가지 이상 쓰시오.</label>
+        <textarea id="answer6" class="save"></textarea>
+      </div>
+      <div class="question">
+        <span class="qnum">7</span><label>고무줄이 컵에서 완전히 떨어진 뒤에도 탄성력이 계속 비행체를 앞으로 미는가? 이유와 함께 쓰시오.</label>
+        <textarea id="answer7" class="save"></textarea>
+      </div>
+      <div class="question">
+        <span class="qnum">8</span><label>배운 세 가지 힘만으로 설명하기 어려운 비행 현상이 있었다면 기록하시오.</label>
+        <textarea id="answer8" class="save" placeholder="예: 회전하는 컵이 예상과 다르게 위쪽으로 휘어가는 현상"></textarea>
+      </div>
+
+      <div class="toolbar screen-only">
+        <button class="btn primary" onclick="saveNow()">현재 내용 저장</button>
+        <button class="btn" onclick="downloadStudent()">내 기록 JSON 저장</button>
+        <button class="btn" onclick="resetStudent()">학생 기록 초기화</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="teacher-print print-page only-teacher">
+    <div class="card">
+      <h2>교사용 | 평가 원칙과 관찰 포인트</h2>
+      <div class="notice good">
+        <b>핵심 원칙</b> — 최장거리 자체에는 직접 점수를 주지 않습니다. <b>과학 개념 적용 → 변인 통제 → 반복 측정 → 근거 있는 해석</b>을 평가합니다.
+      </div>
+
+      <h3 style="margin-top:14px">관찰 포인트</h3>
+      <table>
+        <tr><th>영역</th><th>관찰 내용</th><th>주의할 오개념</th></tr>
+        <tr><td>탄성력</td><td>고무줄 신장과 발사 운동을 연결하는가</td><td>비행 내내 탄성력이 작용한다고 생각함</td></tr>
+        <tr><td>마찰력</td><td>고무줄-컵 접촉이 회전 전달에 필요함을 설명하는가</td><td>마찰은 언제나 운동을 방해한다고만 생각함</td></tr>
+        <tr><td>중력</td><td>비행 중 아래쪽으로 작용함을 정확히 표현하는가</td><td>가벼우면 중력이 작아져 낙하 가속도도 작다고 단정함</td></tr>
+        <tr><td>탐구 설계</td><td>한 번에 한 변인만 변경하는가</td><td>여러 설계 요소를 동시에 변경함</td></tr>
+        <tr><td>자료 해석</td><td>3회 반복과 평균을 근거로 결론을 쓰는가</td><td>가장 긴 한 번의 기록만 사용함</td></tr>
+      </table>
+
+      <h3>교사용 확장 설명</h3>
+      <p class="subtle">회전 비행체가 위쪽으로 휘어가는 현상은 세 힘만으로 완전하게 설명되지 않습니다. 이는 공기와 회전 물체의 상호작용(마그누스 효과)과 관련된 확장 개념으로 다루고, 중1 평가 정답으로 요구하지 않습니다.</p>
+
+      <h3>45분 운영 메모</h3>
+      <table>
+        <tr><th>시간</th><th>교사 행동</th><th>확인 사항</th></tr>
+        <tr><td>0–5</td><td>기본형 시범, 핵심 질문 제시</td><td>정답 설명은 미리 주지 않기</td></tr>
+        <tr><td>5–18</td><td>제작·기본형 측정 지원</td><td>거리 측정 기준 통일</td></tr>
+        <tr><td>18–25</td><td>한 변인 선택 확인</td><td>관련 힘을 학생이 말하게 하기</td></tr>
+        <tr><td>25–36</td><td>개선형 측정 관찰</td><td>반복 측정, 동일 발사 조건</td></tr>
+        <tr><td>36–45</td><td>개별 답안 작성</td><td>모둠 결과는 공유하되 해석은 개인 작성</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="teacher" class="teacher-print print-page only-teacher">
+    <div class="card">
+      <h2>교사용 수행평가 루브릭</h2>
+      <div class="formrow">
+        <div><label>학생</label><input id="tStudent" class="field" readonly></div>
+        <div><label>학급</label><input id="tClass" class="field" readonly></div>
+        <div><label>모둠</label><input id="tTeam" class="field" readonly></div>
+        <div><label>평가일</label><input id="evalDate" class="field save"></div>
+      </div>
+
+      <div class="scoregrid" style="margin-top:14px">
+        <div class="rubric-row" data-weight="30" data-key="concept">
+          <div class="head"><strong>1. 힘의 개념 이해</strong><span class="weight">30점</span></div>
+          <div class="levels">
+            <label><input type="radio" name="concept" value="4"> <b>4</b><br><span class="small">세 힘의 역할과 작용 시점을 정확히 구분</span></label>
+            <label><input type="radio" name="concept" value="3"> <b>3</b><br><span class="small">관련 힘을 대부분 정확히 연결</span></label>
+            <label><input type="radio" name="concept" value="2"> <b>2</b><br><span class="small">힘 이름은 알지만 상황 연결이 일부 부정확</span></label>
+            <label><input type="radio" name="concept" value="1"> <b>1</b><br><span class="small">힘과 현상의 연결에 지속적인 도움 필요</span></label>
+          </div>
+        </div>
+
+        <div class="rubric-row" data-weight="25" data-key="design">
+          <div class="head"><strong>2. 설계 근거</strong><span class="weight">25점</span></div>
+          <div class="levels">
+            <label><input type="radio" name="design" value="4"> <b>4</b><br><span class="small">변경 이유를 힘의 개념으로 구체적으로 예측</span></label>
+            <label><input type="radio" name="design" value="3"> <b>3</b><br><span class="small">변경과 관련 힘의 연결이 타당</span></label>
+            <label><input type="radio" name="design" value="2"> <b>2</b><br><span class="small">설계 변경은 있으나 과학적 근거가 약함</span></label>
+            <label><input type="radio" name="design" value="1"> <b>1</b><br><span class="small">무작위 변경 또는 근거 제시 어려움</span></label>
+          </div>
+        </div>
+
+        <div class="rubric-row" data-weight="20" data-key="experiment">
+          <div class="head"><strong>3. 실험 수행</strong><span class="weight">20점</span></div>
+          <div class="levels">
+            <label><input type="radio" name="experiment" value="4"> <b>4</b><br><span class="small">한 변인만 변경, 3회 반복, 측정 기준 일관</span></label>
+            <label><input type="radio" name="experiment" value="3"> <b>3</b><br><span class="small">대체로 공정한 비교와 반복 측정 수행</span></label>
+            <label><input type="radio" name="experiment" value="2"> <b>2</b><br><span class="small">일부 통제 또는 측정 절차가 불안정</span></label>
+            <label><input type="radio" name="experiment" value="1"> <b>1</b><br><span class="small">비교 조건과 측정이 일관되지 않음</span></label>
+          </div>
+        </div>
+
+        <div class="rubric-row" data-weight="25" data-key="analysis">
+          <div class="head"><strong>4. 결과 해석</strong><span class="weight">25점</span></div>
+          <div class="levels">
+            <label><input type="radio" name="analysis" value="4"> <b>4</b><br><span class="small">평균값과 힘의 개념을 근거로 제한적으로 정확히 설명</span></label>
+            <label><input type="radio" name="analysis" value="3"> <b>3</b><br><span class="small">자료를 근거로 타당한 결론 제시</span></label>
+            <label><input type="radio" name="analysis" value="2"> <b>2</b><br><span class="small">결론은 있으나 자료·개념 연결이 약함</span></label>
+            <label><input type="radio" name="analysis" value="1"> <b>1</b><br><span class="small">자료에 근거한 설명이 부족</span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="scorebox" style="margin-top:14px">
+        <div>
+          <b>총점</b><br><span class="small">각 영역 4수준을 영역별 배점으로 환산</span>
+        </div>
+        <div><span id="totalScore">0</span><b>/100</b></div>
+      </div>
+
+      <div style="margin-top:14px">
+        <label>교사 피드백</label>
+        <textarea id="teacherFeedback" class="save" placeholder="강점, 개념 오개념, 다음 탐구에서 보완할 점"></textarea>
+      </div>
+
+      <div class="toolbar screen-only">
+        <button class="btn primary" onclick="saveNow()">평가 저장</button>
+        <button class="btn" onclick="document.getElementById('importFile').click()">학생 기록 불러오기</button>
+        <input id="importFile" type="file" accept=".json,application/json" style="display:none" onchange="importStudentRecord(event)">
+        <button class="btn" onclick="downloadAssessment()">평가 결과 JSON 저장</button>
+        <button class="btn" onclick="downloadAssessmentCSV()">평가 결과 CSV 저장</button>
+        <button class="btn" onclick="printMode('teacher')">교사용 평가표 인쇄</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="screen-only">
+  이 파일은 인터넷 연결 없이 실행됩니다. 입력 내용은 현재 브라우저의 localStorage에 자동 저장됩니다.
+</footer>
+
+<script>
+const SAVE_KEY = "flyingCupChallenge_v1";
+let timerSeconds = 45*60, timerHandle = null;
+
+function scrollToId(id){ document.getElementById(id)?.scrollIntoView({behavior:"smooth"}); }
+
+function toggleTeacher(){
+  document.body.classList.toggle("teacher");
+  const on = document.body.classList.contains("teacher");
+  document.getElementById("teacherToggle").classList.toggle("active", on);
+  syncTeacherHeader();
+  if(on) scrollToId("teacher");
+}
+
+function syncTeacherHeader(){
+  document.getElementById("tStudent").value = document.getElementById("studentName").value || "";
+  document.getElementById("tClass").value = document.getElementById("className").value || "";
+  document.getElementById("tTeam").value = document.getElementById("teamName").value || "";
+}
+
+function avg(ids){
+  const vals = ids.map(id=>parseFloat(document.getElementById(id).value)).filter(v=>Number.isFinite(v));
+  if(vals.length!==3) return null;
+  return vals.reduce((a,b)=>a+b,0)/3;
+}
+function calcMeans(){
+  const b=avg(["b1","b2","b3"]), a=avg(["a1","a2","a3"]);
+  document.getElementById("bavg").innerHTML = b===null ? "<b>—</b>" : "<b>"+b.toFixed(2)+"</b>";
+  document.getElementById("aavg").innerHTML = a===null ? "<b>—</b>" : "<b>"+a.toFixed(2)+"</b>";
+  document.getElementById("delta").textContent = (a===null||b===null) ? "— m" : (a-b>=0?"+":"")+(a-b).toFixed(2)+" m";
+  saveNow(false);
+}
+
+function calcScore(){
+  let total=0;
+  document.querySelectorAll(".rubric-row").forEach(row=>{
+    const weight=Number(row.dataset.weight);
+    const checked=row.querySelector("input[type=radio]:checked");
+    if(checked) total += weight * (Number(checked.value)/4);
+  });
+  document.getElementById("totalScore").textContent = Math.round(total);
+  saveNow(false);
+}
+
+function collect(){
+  const data={fields:{}, radios:{}, savedAt:new Date().toISOString()};
+  document.querySelectorAll(".save").forEach(el=>data.fields[el.id]=el.value);
+  document.querySelectorAll(".rubric-row input[type=radio]:checked").forEach(el=>data.radios[el.name]=el.value);
+  return data;
+}
+function saveNow(show=true){
+  localStorage.setItem(SAVE_KEY, JSON.stringify(collect()));
+  syncTeacherHeader();
+  if(show) alert("현재 기록을 이 브라우저에 저장했습니다.");
+}
+function loadSaved(){
+  try{
+    const raw=localStorage.getItem(SAVE_KEY); if(!raw) return;
+    const data=JSON.parse(raw);
+    Object.entries(data.fields||{}).forEach(([id,v])=>{const el=document.getElementById(id); if(el) el.value=v;});
+    Object.entries(data.radios||{}).forEach(([name,v])=>{const el=document.querySelector(`input[name="${name}"][value="${v}"]`); if(el) el.checked=true;});
+  }catch(e){}
+  calcMeans(); calcScore(); syncTeacherHeader();
+}
+function resetStudent(){
+  if(!confirm("학생 입력 기록을 초기화할까요?")) return;
+  ["className","studentNo","studentName","teamName","changedVar","changeHow","prediction",
+   "b1","b2","b3","a1","a2","a3","resultChoice","answer4","answer5","answer6","answer7","answer8"]
+   .forEach(id=>{const el=document.getElementById(id); if(el) el.value="";});
+  calcMeans(); saveNow(false);
+}
+
+function downloadBlob(obj, filename){
+  const blob=new Blob([JSON.stringify(obj,null,2)], {type:"application/json;charset=utf-8"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=filename; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+function safeName(){
+  return (document.getElementById("studentName").value || "학생").replace(/[\\/:*?"<>|]/g,"_");
+}
+function downloadStudent(){
+  const d=collect(); delete d.radios;
+  downloadBlob(d, `종이컵비행체_${safeName()}_학생기록.json`);
+}
+function downloadAssessment(){
+  const d=collect(); d.totalScore=Number(document.getElementById("totalScore").textContent);
+  downloadBlob(d, `종이컵비행체_${safeName()}_평가결과.json`);
+}
+
+function importStudentRecord(event){
+  const file = event.target.files && event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try{
+      const data = JSON.parse(reader.result);
+      Object.entries(data.fields||{}).forEach(([id,v])=>{
+        const el=document.getElementById(id);
+        if(el && !["evalDate","teacherFeedback"].includes(id)) el.value=v;
+      });
+      document.querySelectorAll(".rubric-row input[type=radio]").forEach(el=>el.checked=false);
+      document.getElementById("teacherFeedback").value="";
+      calcMeans(); calcScore(); syncTeacherHeader(); saveNow(false);
+      alert("학생 기록을 불러왔습니다. 이제 루브릭을 평가하세요.");
+    }catch(e){ alert("학생 기록 JSON 파일을 읽을 수 없습니다."); }
+    event.target.value="";
+  };
+  reader.readAsText(file,"utf-8");
+}
+function csvCell(v){
+  const x=String(v??"").replace(/"/g,'""');
+  return `"${x}"`;
+}
+function downloadAssessmentCSV(){
+  const fields = collect().fields;
+  const rubric = {};
+  ["concept","design","experiment","analysis"].forEach(name=>{
+    const el=document.querySelector(`input[name="${name}"]:checked`);
+    rubric[name]=el ? el.value : "";
+  });
+  const headers=["학급","번호","이름","모둠","기본형평균(m)","개선형평균(m)","향상거리(m)",
+                 "힘개념(4)","설계근거(4)","실험수행(4)","결과해석(4)","총점","교사피드백"];
+  const b=avg(["b1","b2","b3"]), a=avg(["a1","a2","a3"]);
+  const row=[fields.className,fields.studentNo,fields.studentName,fields.teamName,
+             b===null?"":b.toFixed(2),a===null?"":a.toFixed(2),
+             (a===null||b===null)?"":(a-b).toFixed(2),
+             rubric.concept,rubric.design,rubric.experiment,rubric.analysis,
+             document.getElementById("totalScore").textContent,fields.teacherFeedback];
+  const csv="\uFEFF"+headers.map(csvCell).join(",")+"\n"+row.map(csvCell).join(",");
+  const blob=new Blob([csv],{type:"text/csv;charset=utf-8"});
+  const aTag=document.createElement("a");
+  aTag.href=URL.createObjectURL(blob); aTag.download=`종이컵비행체_${safeName()}_평가결과.csv`; aTag.click();
+  setTimeout(()=>URL.revokeObjectURL(aTag.href),1000);
+}
+
+function printMode(mode){
+  document.body.classList.remove("print-student","print-teacher","print-all");
+  document.body.classList.add("print-"+mode);
+  if(mode==="teacher") document.body.classList.add("teacher");
+  setTimeout(()=>{window.print(); setTimeout(()=>document.body.classList.remove("print-"+mode),400);},100);
+}
+function updateTimer(){
+  const m=Math.floor(timerSeconds/60), s=timerSeconds%60;
+  document.getElementById("timer").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+  if(timerSeconds<=0){pauseTimer(); alert("45분 수행평가 시간이 종료되었습니다.");}
+}
+function startTimer(){ if(timerHandle) return; timerHandle=setInterval(()=>{timerSeconds--; updateTimer();},1000); }
+function pauseTimer(){ clearInterval(timerHandle); timerHandle=null; }
+function resetTimer(){ pauseTimer(); timerSeconds=45*60; updateTimer(); }
+
+document.addEventListener("input", e=>{
+  if(e.target.matches(".save")) { saveNow(false); syncTeacherHeader(); }
+});
+document.querySelectorAll(".rubric-row input[type=radio]").forEach(el=>el.addEventListener("change",calcScore));
+
+if(!document.getElementById("evalDate").value){
+  document.getElementById("evalDate").value = new Date().toLocaleDateString("ko-KR");
+}
+loadSaved();
+updateTimer();
+</script>
+</body>
+</html>
