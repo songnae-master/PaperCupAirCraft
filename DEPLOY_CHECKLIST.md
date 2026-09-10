@@ -1,18 +1,16 @@
-# Railway 배포 체크리스트
+# 익명 ID 버전 배포 체크리스트
 
-- [ ] GitHub 저장소에 프로젝트 업로드
-- [ ] Railway 새 프로젝트 생성
-- [ ] PostgreSQL 서비스 추가
-- [ ] GitHub 저장소로 App 서비스 생성
-- [ ] App Variables에 `DATABASE_URL=${{Postgres.DATABASE_URL}}`
-- [ ] App Variables에 32자 이상 `SESSION_SECRET`
-- [ ] App 서비스 배포 성공 확인
-- [ ] `/health` → `{"ok":true}` 확인
-- [ ] Networking → Generate Domain
-- [ ] 교사 `teacher / 41234123` 최초 로그인
-- [ ] 교사 비밀번호 즉시 변경
-- [ ] 학생 테스트 계정으로 등록
-- [ ] 학생 기록 제출 테스트
-- [ ] 교사 대시보드에서 제출 확인
-- [ ] 루브릭 평가 저장 테스트
-- [ ] CSV 다운로드 테스트
+- [ ] 교사용 배정표는 GitHub에 올리지 않음
+- [ ] `data/allowed-id-hashes.json` 존재 확인
+- [ ] `server.js` 새 버전 업로드
+- [ ] `public/index.html` 새 버전 업로드
+- [ ] `public/app.js` 새 버전 업로드
+- [ ] `README.md`, `.gitignore`, `sql/schema.sql` 업데이트
+- [ ] GitHub main 브랜치 Commit
+- [ ] Railway 자동 재배포 확인
+- [ ] `/health`에서 `mode: anonymous-id`, `allowedIds: 150` 확인
+- [ ] 교사 로그인 확인
+- [ ] 배정된 익명 ID 1개로 테스트 등록
+- [ ] 임의의 미등록 ID가 거부되는지 확인
+- [ ] 제출 후 교사 대시보드에 익명 ID만 보이는지 확인
+- [ ] CSV에 이름·반·번호가 없는지 확인

@@ -1,0 +1,8 @@
+기존 GitHub 저장소에 이 ZIP의 폴더 구조를 유지한 채 덮어쓰세요.
+
+추가: data/allowed-id-hashes.json
+교체: server.js, public/index.html, public/app.js, public/styles.css, README.md, .gitignore, sql/schema.sql
+선택: sql/RESET_STUDENT_TEST_DATA.sql (기존 테스트 학생 데이터 삭제용; 자동 실행되지 않음)
+
+기존 저장소 루트에 있는 예전 index.html은 Express에서 사용하지 않으므로 삭제 권장(필수 아님).
+교사용 익명 ID 배정표/배부카드는 GitHub에 올리지 마세요.

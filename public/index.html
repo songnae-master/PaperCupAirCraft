@@ -1,300 +1,80 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="중학교 1학년 종이컵 비행체 수행평가">
-  <title>3-Force Flying Cup Challenge</title>
-  <link rel="stylesheet" href="/styles.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="중학교 1학년 종이컵 비행체 익명 수행평가">
+<title>3-Force Flying Cup Challenge</title><link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <section id="authPage" class="auth-page">
-    <div class="auth-box">
-      <div class="auth-intro">
-        <span class="chip">중1 과학</span><span class="chip">탄성력</span><span class="chip">마찰력</span><span class="chip">중력</span>
-        <h1>3-Force<br>Flying Cup Challenge</h1>
-        <p>배운 힘을 이용해 종이컵 비행체의 성능을 개선하고, 측정 결과와 과학적 근거로 설명하는 수행평가입니다.</p>
-        <div class="notice" style="background:#1f2a40;border-left-color:#7aa2ff;color:#e5ebf7;margin-top:20px">
-          학생 PIN과 교사 비밀번호는 서버에서 <b>해시</b>로 저장됩니다. 학생은 다른 학생의 제출물을 볼 수 없습니다.
-        </div>
-      </div>
-
-      <div class="auth-panel">
-        <div class="tabs">
-          <button id="studentTabBtn" class="active" type="button">학생</button>
-          <button id="teacherTabBtn" type="button">교사</button>
-        </div>
-
-        <div id="studentAuth" class="auth-view active">
-          <h2>학생 로그인</h2>
-          <p class="help">처음 접속하면 이름과 숫자 4자리 PIN으로 등록합니다. 동명이인은 <b>이름 뒤에 반·번호</b>를 붙여 주세요.</p>
-          <label for="studentNameLogin">이름</label>
-          <input id="studentNameLogin" class="field" autocomplete="username" placeholder="예: 홍길동 또는 홍길동 1-3 17">
-          <label for="studentPinLogin" style="display:block;margin-top:10px">4자리 PIN</label>
-          <input id="studentPinLogin" class="field pin" type="password" inputmode="numeric" maxlength="4" autocomplete="current-password" placeholder="••••">
-          <div class="actions">
-            <button id="studentLoginBtn" class="btn primary" type="button">로그인</button>
-            <button id="studentRegisterBtn" class="btn" type="button">처음 등록</button>
-          </div>
-          <div id="studentAuthMsg" class="msg"></div>
-          <div class="notice" style="margin-top:12px"><b>PIN을 잊지 마세요.</b> 교사는 PIN 원문을 볼 수 없습니다.</div>
-        </div>
-
-        <div id="teacherAuth" class="auth-view">
-          <h2>교사 로그인</h2>
-          <p class="help">초기 계정은 <b>teacher / 41234123</b>이며, 첫 로그인 후 비밀번호 변경이 강제됩니다.</p>
-          <label for="teacherIdLogin">아이디</label>
-          <input id="teacherIdLogin" class="field" value="teacher" autocomplete="username">
-          <label for="teacherPwLogin" style="display:block;margin-top:10px">비밀번호</label>
-          <input id="teacherPwLogin" class="field" type="password" autocomplete="current-password">
-          <div class="actions"><button id="teacherLoginBtn" class="btn dark" type="button">교사 로그인</button></div>
-          <div id="teacherAuthMsg" class="msg"></div>
-        </div>
+<section id="authPage" class="auth-page">
+  <div class="auth-box">
+    <div class="auth-intro">
+      <span class="chip">익명 수행평가</span><span class="chip">탄성력</span><span class="chip">마찰력</span><span class="chip">중력</span>
+      <h1>3-Force<br>Flying Cup Challenge</h1>
+      <p>수업에서 배운 힘을 실제 비행체 설계에 적용합니다. 서버에는 학생의 이름·반·번호를 저장하지 않습니다.</p>
+      <div class="notice" style="background:#1f2a40;border-left-color:#7aa2ff;color:#e5ebf7;margin-top:20px">
+        학생은 선생님에게 받은 <b>5글자 익명 ID</b>와 자신이 정한 <b>숫자 4자리 PIN</b>만 사용합니다.
       </div>
     </div>
-  </section>
-
-  <header id="topbar" class="topbar hidden">
-    <div class="shell inner">
-      <div class="brand">3-Force Flying Cup<small>중1 힘과 운동 수행평가</small></div>
-      <span id="whoami" class="pill"></span>
-      <button id="studentViewBtn" class="btn teacher-only" type="button">학생 화면</button>
-      <button id="dashboardBtn" class="btn teacher-only" type="button">교사 대시보드</button>
-      <button id="logoutBtn" class="btn" type="button">로그아웃</button>
-    </div>
-  </header>
-
-  <main id="appRoot" class="app hidden">
-    <div class="shell">
-      <!-- 학생 활동 화면 -->
-      <div id="studentApp" class="student-only">
-        <section class="hero">
-          <div class="card">
-            <div class="pills"><span class="pill">탄성력</span><span class="pill">마찰력</span><span class="pill">중력</span><span class="pill">설계·측정·개선</span></div>
-            <h1>종이컵 비행체<br>성능 개선 챌린지</h1>
-            <p>기본형보다 더 멀리 날아가는 비행체를 설계하고, <b>왜 성능이 달라졌는지 배운 힘과 측정값으로 설명</b>하세요.</p>
-            <div class="grid3" style="margin-top:14px">
-              <div class="status-card"><b>① 힘 찾기</b><br><span class="help">언제 어떤 힘이 관여하는가?</span></div>
-              <div class="status-card"><b>② 한 변인 바꾸기</b><br><span class="help">공정하게 비교하기</span></div>
-              <div class="status-card"><b>③ 자료로 설명하기</b><br><span class="help">3회 측정과 평균</span></div>
-            </div>
-          </div>
-          <div class="card mission">
-            <b>오늘의 미션</b>
-            <div class="big">기본형보다<br>더 멀리 날려라.</div>
-            <p><b>최장거리 자체는 점수가 아닙니다.</b> 개념 적용·설계 근거·실험 수행·결과 해석이 평가 대상입니다.</p>
-            <div id="latestSubmission" class="help"></div>
-          </div>
-        </section>
-
-        <section class="section card">
-          <h2>1. 제작과 날리기</h2>
-          <p class="help">포스터를 눌러 확대해서 볼 수 있습니다.</p>
-          <div class="poster-wrap">
-            <a href="/assets/make-poster.png" target="_blank" rel="noopener"><img class="poster" src="/assets/make-poster.png" alt="종이컵 비행체 만들기 포스터"></a>
-            <a href="/assets/fly-poster.png" target="_blank" rel="noopener"><img class="poster" src="/assets/fly-poster.png" alt="종이컵 비행체 날리는 법 포스터"></a>
-          </div>
-        </section>
-
-        <section class="section">
-          <h2>2. 세 가지 힘을 적용해 보기</h2>
-          <div class="grid3">
-            <div class="card force"><div class="icon">↔️</div><h3>탄성력</h3><p>늘어난 고무줄이 원래 길이로 돌아가면서 <b>발사 순간</b> 비행체의 운동을 변화시킵니다.</p></div>
-            <div class="card force"><div class="icon">🌀</div><h3>마찰력</h3><p>고무줄과 종이컵 사이의 마찰이 고무줄의 움직임을 컵의 <b>회전</b>으로 전달합니다.</p></div>
-            <div class="card force"><div class="icon">⬇️</div><h3>중력</h3><p>비행 중 비행체는 지구가 아래로 잡아당기는 힘을 계속 받습니다.</p></div>
-          </div>
-          <div class="notice good" style="margin-top:12px"><b>주의:</b> 고무줄이 컵에서 떨어진 뒤에는 탄성력이 더 이상 비행체를 직접 밀지 않습니다. 회전 비행에는 공기의 힘도 관여합니다.</div>
-        </section>
-
-        <section class="section card">
-          <h2>3. 45분 수행평가 흐름</h2>
-          <div class="timeline">
-            <div class="time-step"><b>0–5분</b>현상 관찰·예측</div>
-            <div class="time-step"><b>5–12분</b>기본형 제작</div>
-            <div class="time-step"><b>12–18분</b>기본형 3회 측정</div>
-            <div class="time-step"><b>18–25분</b>힘 분석·변인 선택</div>
-            <div class="time-step"><b>25–36분</b>개선형 제작·측정</div>
-            <div class="time-step"><b>36–45분</b>평균 비교·개별 해석</div>
-          </div>
-        </section>
-
-        <form id="activityForm" novalidate>
-          <section class="section card">
-            <h2>4. 학생 정보와 설계</h2>
-            <div class="grid4">
-              <div><label>학급</label><input id="className" class="field" placeholder="예: 1-3" maxlength="30" required></div>
-              <div><label>번호</label><input id="studentNo" class="field" placeholder="예: 17" maxlength="20" required></div>
-              <div><label>이름</label><input id="studentName" class="field" readonly></div>
-              <div><label>모둠</label><input id="teamName" class="field" placeholder="예: 4모둠" maxlength="40"></div>
-            </div>
-
-            <div class="question"><span class="qnum">1</span><label>우리 모둠이 바꿀 한 가지 조건은?</label>
-              <input id="changedVar" class="field" placeholder="예: 고무줄 감는 횟수" maxlength="200" required></div>
-            <div class="question"><span class="qnum">2</span><label>그 조건을 어떻게 바꿀 것인가?</label>
-              <input id="changeHow" class="field" placeholder="예: 2회 → 4회" maxlength="500" required></div>
-            <div class="question"><span class="qnum">3</span><label>어떤 힘과 관련 있으며, 비행거리가 어떻게 달라질 것으로 예상하는가?</label>
-              <textarea id="prediction" class="field" maxlength="5000" required></textarea></div>
-          </section>
-
-          <section class="section card">
-            <h2>5. 비행거리 3회 측정</h2>
-            <div class="table-wrap">
-              <table class="measure">
-                <tr><th>설계</th><th>1회(m)</th><th>2회(m)</th><th>3회(m)</th><th>평균(m)</th></tr>
-                <tr><td><b>기본형</b></td>
-                  <td><input id="b1" type="number" min="0" max="100" step="0.01" required></td>
-                  <td><input id="b2" type="number" min="0" max="100" step="0.01" required></td>
-                  <td><input id="b3" type="number" min="0" max="100" step="0.01" required></td>
-                  <td id="bavg" class="avg">—</td></tr>
-                <tr><td><b>개선형</b></td>
-                  <td><input id="a1" type="number" min="0" max="100" step="0.01" required></td>
-                  <td><input id="a2" type="number" min="0" max="100" step="0.01" required></td>
-                  <td><input id="a3" type="number" min="0" max="100" step="0.01" required></td>
-                  <td id="aavg" class="avg">—</td></tr>
-              </table>
-            </div>
-            <div class="grid2" style="margin-top:12px">
-              <div class="status-card"><b>평균 비행거리 변화</b><div id="delta" class="big" style="font-size:25px">— m</div></div>
-              <div><label>결과 선택</label>
-                <select id="resultChoice" class="field">
-                  <option value="">선택</option>
-                  <option>비행거리가 증가했다.</option>
-                  <option>거의 변화가 없었다.</option>
-                  <option>비행거리가 감소했다.</option>
-                </select>
-              </div>
-            </div>
-          </section>
-
-          <section class="section card">
-            <h2>6. 개별 결과 해석</h2>
-            <div class="question"><span class="qnum">4</span><label>기본형과 개선형의 평균 비행거리를 이용해 결과를 한 문장으로 쓰시오.</label><textarea id="q4" class="field" maxlength="5000" required></textarea></div>
-            <div class="question"><span class="qnum">5</span><label>설계 변화가 결과에 영향을 준 까닭을 관련된 힘의 개념으로 설명하시오.</label><textarea id="q5" class="field" maxlength="5000" required></textarea></div>
-            <div class="question"><span class="qnum">6</span><label>이 실험에서 같게 해야 했던 조건을 두 가지 이상 쓰시오.</label><textarea id="q6" class="field" maxlength="5000" required></textarea></div>
-            <div class="question"><span class="qnum">7</span><label>고무줄이 컵에서 완전히 떨어진 뒤에도 탄성력이 계속 비행체를 앞으로 미는가? 이유와 함께 쓰시오.</label><textarea id="q7" class="field" maxlength="5000" required></textarea></div>
-            <div class="question"><span class="qnum">8</span><label>배운 세 가지 힘만으로 설명하기 어려운 비행 현상이 있었다면 기록하시오.</label><textarea id="q8" class="field" maxlength="5000" placeholder="선택 문항"></textarea></div>
-
-            <div class="notice">제출하면 기록이 <b>Railway PostgreSQL</b>에 저장됩니다. 학생 PIN은 제출 자료에 포함되지 않습니다.</div>
-            <div class="actions">
-              <button id="submitBtn" class="btn green" type="submit">기록 제출</button>
-              <button id="printBtn" class="btn" type="button">활동지 인쇄</button>
-              <span id="submitResult" class="submit-result"></span>
-            </div>
-          </section>
-        </form>
+    <div class="auth-panel">
+      <div class="tabs"><button id="studentTabBtn" class="active" type="button">학생</button><button id="teacherTabBtn" type="button">교사</button></div>
+      <div id="studentAuth" class="auth-view active">
+        <h2>학생 로그인</h2>
+        <p class="help">배부받은 카드의 5글자 ID를 그대로 입력하세요. 처음 접속할 때만 원하는 4자리 PIN을 등록합니다.</p>
+        <label for="anonymousIdLogin">5글자 익명 ID</label>
+        <input id="anonymousIdLogin" class="field" autocomplete="username" maxlength="5" placeholder="예: 몽글토끼별">
+        <label for="studentPinLogin" style="display:block;margin-top:10px">4자리 PIN</label>
+        <input id="studentPinLogin" class="field pin" type="password" inputmode="numeric" maxlength="4" autocomplete="current-password" placeholder="••••">
+        <div class="actions"><button id="studentLoginBtn" class="btn primary" type="button">로그인</button><button id="studentRegisterBtn" class="btn" type="button">처음 등록</button></div>
+        <div id="studentAuthMsg" class="msg"></div>
+        <div class="notice" style="margin-top:12px"><b>중요:</b> 이름·반·번호를 ID나 답안에 직접 적지 마세요.</div>
       </div>
-
-      <!-- 교사 대시보드 -->
-      <div id="teacherApp" class="teacher-only hidden">
-        <div class="dashboard">
-          <aside class="card sidebar">
-            <h2>제출 현황</h2>
-            <div class="grid2" style="grid-template-columns:1fr 1fr">
-              <div class="stat"><span class="help">등록</span><div id="statRegistered" class="n">0</div></div>
-              <div class="stat"><span class="help">제출</span><div id="statSubmitted" class="n">0</div></div>
-              <div class="stat"><span class="help">평가완료</span><div id="statAssessed" class="n">0</div></div>
-              <div class="stat"><span class="help">평가대기</span><div id="statPending" class="n">0</div></div>
-            </div>
-            <div style="margin-top:12px">
-              <label>검색</label><input id="teacherSearch" class="field" placeholder="이름·학급·번호">
-            </div>
-            <div class="actions">
-              <button id="refreshDashboardBtn" class="btn" type="button">새로고침</button>
-              <a class="btn" href="/api/teacher/export.csv">전체 CSV</a>
-            </div>
-            <hr style="border:0;border-top:1px solid var(--line);margin:14px 0">
-            <div id="studentList" class="student-list"></div>
-          </aside>
-
-          <section>
-            <div id="teacherEmpty" class="card"><h2>학생을 선택하세요</h2><p class="help">왼쪽 제출 목록에서 학생을 선택하면 답안과 평가 루브릭이 표시됩니다.</p></div>
-
-            <div id="submissionDetail" class="hidden">
-              <div class="card">
-                <h2 id="detailTitle">학생 제출</h2>
-                <div id="detailMeta" class="help"></div>
-                <div class="grid3" style="margin-top:12px">
-                  <div class="status-card"><b>기본형 평균</b><div id="dBaseline" class="big" style="font-size:23px">—</div></div>
-                  <div class="status-card"><b>개선형 평균</b><div id="dImproved" class="big" style="font-size:23px">—</div></div>
-                  <div class="status-card"><b>향상거리</b><div id="dDelta" class="big" style="font-size:23px">—</div></div>
-                </div>
-              </div>
-
-              <div class="card section">
-                <h2>설계와 답안</h2>
-                <h3>변경한 조건</h3><div id="dDesign" class="answer-box"></div>
-                <h3 style="margin-top:12px">예측</h3><div id="dPrediction" class="answer-box"></div>
-                <div id="answerDetails"></div>
-              </div>
-
-              <div class="card section">
-                <h2>교사용 루브릭</h2>
-                <div class="rubric">
-                  <div class="rubric-row" data-name="concept">
-                    <div class="rubric-head"><strong>1. 힘의 개념 이해</strong><span class="weight">30점</span></div>
-                    <div class="levels">
-                      <label class="level"><input type="radio" name="concept" value="4"> 4 · 세 힘의 역할과 작용 시점을 정확히 구분</label>
-                      <label class="level"><input type="radio" name="concept" value="3"> 3 · 관련 힘을 대부분 정확히 연결</label>
-                      <label class="level"><input type="radio" name="concept" value="2"> 2 · 힘 이름은 알지만 상황 연결 일부 부정확</label>
-                      <label class="level"><input type="radio" name="concept" value="1"> 1 · 힘과 현상의 연결에 도움 필요</label>
-                    </div>
-                  </div>
-                  <div class="rubric-row" data-name="design">
-                    <div class="rubric-head"><strong>2. 설계 근거</strong><span class="weight">25점</span></div>
-                    <div class="levels">
-                      <label class="level"><input type="radio" name="design" value="4"> 4 · 힘의 개념으로 구체적으로 예측</label>
-                      <label class="level"><input type="radio" name="design" value="3"> 3 · 변경과 관련 힘의 연결이 타당</label>
-                      <label class="level"><input type="radio" name="design" value="2"> 2 · 설계 변경은 있으나 근거가 약함</label>
-                      <label class="level"><input type="radio" name="design" value="1"> 1 · 무작위 변경 또는 근거 부족</label>
-                    </div>
-                  </div>
-                  <div class="rubric-row" data-name="experiment">
-                    <div class="rubric-head"><strong>3. 실험 수행</strong><span class="weight">20점</span></div>
-                    <div class="levels">
-                      <label class="level"><input type="radio" name="experiment" value="4"> 4 · 한 변인, 3회 반복, 기준 일관</label>
-                      <label class="level"><input type="radio" name="experiment" value="3"> 3 · 대체로 공정한 비교와 반복 측정</label>
-                      <label class="level"><input type="radio" name="experiment" value="2"> 2 · 일부 통제 또는 측정이 불안정</label>
-                      <label class="level"><input type="radio" name="experiment" value="1"> 1 · 비교 조건과 측정이 일관되지 않음</label>
-                    </div>
-                  </div>
-                  <div class="rubric-row" data-name="analysis">
-                    <div class="rubric-head"><strong>4. 결과 해석</strong><span class="weight">25점</span></div>
-                    <div class="levels">
-                      <label class="level"><input type="radio" name="analysis" value="4"> 4 · 평균값과 힘의 개념을 근거로 정확히 설명</label>
-                      <label class="level"><input type="radio" name="analysis" value="3"> 3 · 자료를 근거로 타당한 결론 제시</label>
-                      <label class="level"><input type="radio" name="analysis" value="2"> 2 · 결론은 있으나 자료·개념 연결 약함</label>
-                      <label class="level"><input type="radio" name="analysis" value="1"> 1 · 자료에 근거한 설명 부족</label>
-                    </div>
-                  </div>
-                </div>
-                <div class="score-box"><div><b>총점</b><br><span class="help" style="color:#d3d8e3">4수준을 영역 배점에 비례 환산</span></div><div><span id="teacherScore" class="score">0</span>/100</div></div>
-                <label for="teacherFeedback" style="display:block;margin-top:12px">교사 피드백</label>
-                <textarea id="teacherFeedback" class="field" maxlength="5000"></textarea>
-                <div class="actions">
-                  <button id="saveAssessmentBtn" class="btn primary" type="button">평가 저장</button>
-                  <span id="assessmentMsg" class="msg"></span>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
+      <div id="teacherAuth" class="auth-view">
+        <h2>교사 로그인</h2><p class="help">초기 계정은 <b>teacher / 41234123</b>이며 첫 로그인 후 비밀번호 변경이 강제됩니다.</p>
+        <label>아이디</label><input id="teacherIdLogin" class="field" value="teacher" autocomplete="username">
+        <label style="display:block;margin-top:10px">비밀번호</label><input id="teacherPwLogin" class="field" type="password" autocomplete="current-password">
+        <div class="actions"><button id="teacherLoginBtn" class="btn dark" type="button">교사 로그인</button></div><div id="teacherAuthMsg" class="msg"></div>
       </div>
-    </div>
-  </main>
-
-  <div id="passwordModal" class="modal hidden">
-    <div class="card">
-      <h2>교사 비밀번호 변경</h2>
-      <p>초기 비밀번호는 계속 사용할 수 없습니다. 새 비밀번호를 설정해야 교사 대시보드를 사용할 수 있습니다.</p>
-      <label>새 비밀번호</label>
-      <input id="newTeacherPw" class="field" type="password" autocomplete="new-password" placeholder="8자 이상">
-      <label style="display:block;margin-top:10px">새 비밀번호 확인</label>
-      <input id="newTeacherPw2" class="field" type="password" autocomplete="new-password">
-      <div class="actions"><button id="changeTeacherPwBtn" class="btn primary" type="button">변경하고 계속</button></div>
-      <div id="changePwMsg" class="msg"></div>
     </div>
   </div>
+</section>
 
-  <script src="/app.js"></script>
-</body>
-</html>
+<header id="topbar" class="topbar hidden"><div class="shell inner"><div class="brand">3-Force Flying Cup<small>익명 ID 수행평가</small></div><span id="whoami" class="pill"></span><button id="dashboardBtn" class="btn teacher-only" type="button">교사 대시보드</button><button id="logoutBtn" class="btn" type="button">로그아웃</button></div></header>
+
+<main id="appRoot" class="app hidden"><div class="shell">
+<div id="studentApp" class="student-only">
+  <section class="hero"><div class="card"><div class="pills"><span class="pill">탄성력</span><span class="pill">마찰력</span><span class="pill">중력</span><span class="pill">설계·측정·개선</span></div><h1>종이컵 비행체<br>성능 개선 챌린지</h1><p>기본형보다 더 멀리 날아가는 비행체를 설계하고, <b>왜 성능이 달라졌는지 배운 힘과 측정값으로 설명</b>하세요.</p></div><div class="card mission"><b>나의 익명 ID</b><div id="studentAnonymousId" class="big">—</div><p><b>이름·반·번호는 입력하지 않습니다.</b></p><div id="latestSubmission" class="help"></div></div></section>
+  <section class="section card"><h2>1. 제작과 날리기</h2><p class="help">포스터를 눌러 확대할 수 있습니다.</p><div class="poster-wrap"><a href="/assets/make-poster.png" target="_blank" rel="noopener"><img class="poster" src="/assets/make-poster.png" alt="종이컵 비행체 만들기"></a><a href="/assets/fly-poster.png" target="_blank" rel="noopener"><img class="poster" src="/assets/fly-poster.png" alt="종이컵 비행체 날리는 법"></a></div></section>
+  <section class="section"><h2>2. 세 가지 힘 적용</h2><div class="grid3"><div class="card force"><div class="icon">↔️</div><h3>탄성력</h3><p>늘어난 고무줄이 원래 길이로 돌아가면서 <b>발사 순간</b> 운동을 변화시킵니다.</p></div><div class="card force"><div class="icon">🌀</div><h3>마찰력</h3><p>고무줄과 종이컵 사이의 마찰이 움직임을 컵의 <b>회전</b>으로 전달합니다.</p></div><div class="card force"><div class="icon">⬇️</div><h3>중력</h3><p>비행 중 비행체에는 지구가 아래로 잡아당기는 힘이 작용합니다.</p></div></div><div class="notice good" style="margin-top:12px"><b>주의:</b> 고무줄이 떨어진 뒤에는 탄성력이 비행체를 계속 미는 것이 아닙니다.</div></section>
+  <section class="section card"><h2>3. 45분 수행평가 흐름</h2><div class="timeline"><div class="time-step"><b>0–5분</b>현상 관찰·예측</div><div class="time-step"><b>5–12분</b>기본형 제작</div><div class="time-step"><b>12–18분</b>기본형 3회 측정</div><div class="time-step"><b>18–25분</b>힘 분석·변인 선택</div><div class="time-step"><b>25–36분</b>개선형 제작·측정</div><div class="time-step"><b>36–45분</b>평균 비교·개별 해석</div></div></section>
+  <form id="activityForm" novalidate>
+    <section class="section card"><h2>4. 설계하기</h2><div class="notice">앱에는 개인정보를 적지 않습니다. 서술 답안에도 자신의 이름이나 반·번호를 쓰지 마세요.</div>
+      <div class="question"><span class="qnum">1</span><label>우리 모둠이 바꿀 한 가지 조건은?</label><input id="changedVar" class="field" maxlength="200" placeholder="예: 고무줄 감는 횟수" required></div>
+      <div class="question"><span class="qnum">2</span><label>그 조건을 어떻게 바꿀 것인가?</label><input id="changeHow" class="field" maxlength="500" placeholder="예: 2회 → 4회" required></div>
+      <div class="question"><span class="qnum">3</span><label>어떤 힘과 관련 있으며, 비행거리가 어떻게 달라질 것으로 예상하는가?</label><textarea id="prediction" class="field" maxlength="5000" required></textarea></div>
+    </section>
+    <section class="section card"><h2>5. 비행거리 3회 측정</h2><div class="table-wrap"><table class="measure"><tr><th>설계</th><th>1회(m)</th><th>2회(m)</th><th>3회(m)</th><th>평균(m)</th></tr><tr><td><b>기본형</b></td><td><input id="b1" type="number" min="0" max="100" step="0.01" required></td><td><input id="b2" type="number" min="0" max="100" step="0.01" required></td><td><input id="b3" type="number" min="0" max="100" step="0.01" required></td><td id="bavg" class="avg">—</td></tr><tr><td><b>개선형</b></td><td><input id="a1" type="number" min="0" max="100" step="0.01" required></td><td><input id="a2" type="number" min="0" max="100" step="0.01" required></td><td><input id="a3" type="number" min="0" max="100" step="0.01" required></td><td id="aavg" class="avg">—</td></tr></table></div><div class="grid2" style="margin-top:12px"><div class="status-card"><b>평균 비행거리 변화</b><div id="delta" class="big" style="font-size:25px">— m</div></div><div><label>결과 선택</label><select id="resultChoice" class="field"><option value="">선택</option><option>비행거리가 증가했다.</option><option>거의 변화가 없었다.</option><option>비행거리가 감소했다.</option></select></div></div></section>
+    <section class="section card"><h2>6. 개별 결과 해석</h2>
+      <div class="question"><span class="qnum">4</span><label>기본형과 개선형의 평균 비행거리를 이용해 결과를 한 문장으로 쓰시오.</label><textarea id="q4" class="field" maxlength="5000" required></textarea></div>
+      <div class="question"><span class="qnum">5</span><label>설계 변화가 결과에 영향을 준 까닭을 관련된 힘의 개념으로 설명하시오.</label><textarea id="q5" class="field" maxlength="5000" required></textarea></div>
+      <div class="question"><span class="qnum">6</span><label>이 실험에서 같게 해야 했던 조건을 두 가지 이상 쓰시오.</label><textarea id="q6" class="field" maxlength="5000" required></textarea></div>
+      <div class="question"><span class="qnum">7</span><label>고무줄이 컵에서 완전히 떨어진 뒤에도 탄성력이 계속 비행체를 앞으로 미는가? 이유와 함께 쓰시오.</label><textarea id="q7" class="field" maxlength="5000" required></textarea></div>
+      <div class="question"><span class="qnum">8</span><label>배운 세 가지 힘만으로 설명하기 어려운 비행 현상이 있었다면 기록하시오.</label><textarea id="q8" class="field" maxlength="5000" placeholder="선택 문항"></textarea></div>
+      <div class="notice">제출 데이터에는 <b>익명 ID와 수행평가 기록만</b> 저장되며 이름·반·번호·PIN 원문은 저장하지 않습니다.</div><div class="actions"><button id="submitBtn" class="btn green" type="submit">기록 제출</button><button id="printBtn" class="btn" type="button">활동지 인쇄</button><span id="submitResult" class="submit-result"></span></div>
+    </section>
+  </form>
+</div>
+
+<div id="teacherApp" class="teacher-only hidden"><div class="dashboard">
+<aside class="card sidebar"><h2>익명 제출 현황</h2><div class="grid2" style="grid-template-columns:1fr 1fr"><div class="stat"><span class="help">배정 ID</span><div id="statAllocated" class="n">150</div></div><div class="stat"><span class="help">등록</span><div id="statRegistered" class="n">0</div></div><div class="stat"><span class="help">제출</span><div id="statSubmitted" class="n">0</div></div><div class="stat"><span class="help">평가대기</span><div id="statPending" class="n">0</div></div></div><div style="margin-top:12px"><label>익명 ID 검색</label><input id="teacherSearch" class="field" placeholder="예: 몽글토끼별"></div><div class="actions"><button id="refreshDashboardBtn" class="btn" type="button">새로고침</button><a class="btn" href="/api/teacher/export.csv">전체 CSV</a></div><hr style="border:0;border-top:1px solid var(--line);margin:14px 0"><div id="studentList" class="student-list"></div></aside>
+<section><div id="teacherEmpty" class="card"><h2>익명 ID를 선택하세요</h2><p class="help">실제 학생과의 대응은 서버가 아니라 교사용 오프라인 배정표에서 확인합니다.</p></div><div id="submissionDetail" class="hidden"><div class="card"><h2 id="detailTitle">익명 제출</h2><div id="detailMeta" class="help"></div><div class="grid3" style="margin-top:12px"><div class="status-card"><b>기본형 평균</b><div id="dBaseline" class="big" style="font-size:23px">—</div></div><div class="status-card"><b>개선형 평균</b><div id="dImproved" class="big" style="font-size:23px">—</div></div><div class="status-card"><b>향상거리</b><div id="dDelta" class="big" style="font-size:23px">—</div></div></div></div><div class="card section"><h2>설계와 답안</h2><h3>변경한 조건</h3><div id="dDesign" class="answer-box"></div><h3 style="margin-top:12px">예측</h3><div id="dPrediction" class="answer-box"></div><div id="answerDetails"></div></div>
+<div class="card section"><h2>교사용 루브릭</h2><div class="rubric">
+<div class="rubric-row"><div class="rubric-head"><strong>1. 힘의 개념 이해</strong><span class="weight">30점</span></div><div class="levels"><label class="level"><input type="radio" name="concept" value="4"> 4 · 세 힘의 역할과 작용 시점을 정확히 구분</label><label class="level"><input type="radio" name="concept" value="3"> 3 · 관련 힘을 대부분 정확히 연결</label><label class="level"><input type="radio" name="concept" value="2"> 2 · 일부 연결이 부정확</label><label class="level"><input type="radio" name="concept" value="1"> 1 · 도움 필요</label></div></div>
+<div class="rubric-row"><div class="rubric-head"><strong>2. 설계 근거</strong><span class="weight">25점</span></div><div class="levels"><label class="level"><input type="radio" name="design" value="4"> 4 · 힘 개념으로 구체적으로 예측</label><label class="level"><input type="radio" name="design" value="3"> 3 · 관련 힘 연결이 타당</label><label class="level"><input type="radio" name="design" value="2"> 2 · 근거가 약함</label><label class="level"><input type="radio" name="design" value="1"> 1 · 근거 부족</label></div></div>
+<div class="rubric-row"><div class="rubric-head"><strong>3. 실험 수행</strong><span class="weight">20점</span></div><div class="levels"><label class="level"><input type="radio" name="experiment" value="4"> 4 · 한 변인, 3회 반복, 기준 일관</label><label class="level"><input type="radio" name="experiment" value="3"> 3 · 대체로 공정한 비교</label><label class="level"><input type="radio" name="experiment" value="2"> 2 · 일부 불안정</label><label class="level"><input type="radio" name="experiment" value="1"> 1 · 비교 조건 불일치</label></div></div>
+<div class="rubric-row"><div class="rubric-head"><strong>4. 결과 해석</strong><span class="weight">25점</span></div><div class="levels"><label class="level"><input type="radio" name="analysis" value="4"> 4 · 평균값과 힘 개념으로 정확히 설명</label><label class="level"><input type="radio" name="analysis" value="3"> 3 · 자료 근거 결론</label><label class="level"><input type="radio" name="analysis" value="2"> 2 · 연결이 약함</label><label class="level"><input type="radio" name="analysis" value="1"> 1 · 근거 부족</label></div></div>
+</div><div class="score-box"><div><b>총점</b></div><div><span id="teacherScore" class="score">0</span>/100</div></div><label style="display:block;margin-top:12px">교사 피드백</label><textarea id="teacherFeedback" class="field" maxlength="5000"></textarea><div class="actions"><button id="saveAssessmentBtn" class="btn primary" type="button">평가 저장</button><span id="assessmentMsg" class="msg"></span></div></div></div></section>
+</div></div>
+</div></main>
+<div id="passwordModal" class="modal hidden"><div class="card"><h2>교사 비밀번호 변경</h2><p>초기 비밀번호는 계속 사용할 수 없습니다.</p><label>새 비밀번호</label><input id="newTeacherPw" class="field" type="password" autocomplete="new-password" placeholder="8자 이상"><label style="display:block;margin-top:10px">새 비밀번호 확인</label><input id="newTeacherPw2" class="field" type="password" autocomplete="new-password"><div class="actions"><button id="changeTeacherPwBtn" class="btn primary" type="button">변경하고 계속</button></div><div id="changePwMsg" class="msg"></div></div></div>
+<script src="/app.js"></script></body></html>
